@@ -1,3 +1,10 @@
+!.mvn/wrapper/maven-wrapper.jar
+classpath
+.project
+.settings/
+.idea
+.gradle
+**/target/**
 # Compiled class file
 *.class
 
