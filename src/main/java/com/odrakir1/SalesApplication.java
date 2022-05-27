@@ -14,7 +14,7 @@ import javax.xml.ws.Response;
 @RestController
 public class SalesApplication {
 
-    @Value("${spring.application.name}")
+    @Value("${application.name}")
     private String applicationName;
 
     @Value("${server.port}")
