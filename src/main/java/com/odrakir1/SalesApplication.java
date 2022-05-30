@@ -30,14 +30,14 @@ public class SalesApplication {
 
           customerList.forEach(customer -> {
               customer.setName(customer.getName() + " updated");
-              customers.update(customer);
+              customers.save(customer);
           });
 
           customerList = customers.findAll();
 
           customerList.forEach(System.out::println);
 
-          System.out.println(customers.findByName("Linus"));
+          System.out.println(customers.findByNameContains("Linus"));
 
           customerList = customers.findAll();
 
