@@ -3,7 +3,18 @@ package com.odrakir1.domain.entity;
 public class Customer {
 
     private Integer id;
-    private String nome;
+    private String name;
+
+    public Customer() {};
+
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public Customer(String name, Integer id) {
+        this.name = name;
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
@@ -13,13 +24,18 @@ public class Customer {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
