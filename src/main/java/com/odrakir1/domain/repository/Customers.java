@@ -6,58 +6,55 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 @Repository
 public class Customers {
-    private static String INSERT = "INSERT INTO Customer (name) values (?) ";
-    private static String FIND_ALL = "SELECT * FROM Customer ";
-    private static String UPDATE = "UPDATE Customer SET name = ? WHERE id = ? ";
-    private static String DELETE = "DELETE FROM Customer WHERE id = ? ";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    EntityManager entityManager;
+
+    @Transactional
     public Customer save(Customer customer){
-        jdbcTemplate.update(INSERT, customer.getName());
+        entityManager.persist(customer);
         return customer;
     }
 
+    @Transactional
     public List<Customer> findAll() throws SQLException{
-       return jdbcTemplate.query(FIND_ALL, getRowMapper());
+       return entityManager.createQuery("FROM Customer", Customer.class).getResultList();
     }
 
-    private RowMapper<Customer> getRowMapper() {
-        return new RowMapper<Customer>() {
-            @Override
-            public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return new Customer(resultSet.getString("name"), resultSet.getInt("id"));
-            }
-        };
-    }
-
+    @Transactional
     public Customer update(Customer customer){
-        try {
-            jdbcTemplate.update(UPDATE, customer.getName(), customer.getId());
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
+        entityManager.merge(customer);
 
         return customer;
     }
 
+    @Transactional
     public void delete(Customer customer){
-        try {
-            jdbcTemplate.update(DELETE, customer.getId());
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
+        if(!entityManager.contains(customer))
+            customer = entityManager.merge(customer);
+
+        entityManager.remove(customer);
     }
 
+    @Transactional(readOnly = true)
     public List<Customer> findByName(String name) throws SQLException{
-        return jdbcTemplate.query(FIND_ALL.concat("WHERE name LIKE ?"), new Object[] {"%" + name + "%"}, getRowMapper());
+        String jpql = "SELECT c from Customer c WHERE c.name LIKE :name";
+        TypedQuery<Customer> query = entityManager.createQuery(jpql, Customer.class);
+        query.setParameter("name", "%" + name + "%") ;
+
+        return query.getResultList();
     }
 }
