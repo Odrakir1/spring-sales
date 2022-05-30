@@ -1,8 +1,17 @@
 package com.odrakir1.domain.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Customer")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private Integer id;
+
+    @Column(name = "name")
     private String name;
 
     public Customer() {};
