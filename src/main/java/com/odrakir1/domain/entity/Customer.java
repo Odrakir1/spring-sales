@@ -1,6 +1,7 @@
 package com.odrakir1.domain.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "Customer")
@@ -14,10 +15,21 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "Customer")
+    private Set<Orders> orders;
+
     public Customer() {};
 
     public Customer(String name) {
         this.name = name;
+    }
+
+    public Set<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
     }
 
     public Customer(String name, Integer id) {
