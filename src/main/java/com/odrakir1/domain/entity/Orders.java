@@ -1,12 +1,25 @@
 package com.odrakir1.domain.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "Orders")
 public class Orders {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "Customer_id")
     private Customer customer;
+
+    @Column(name = "OrdersDate")
     private LocalDate ordersDate;
+
+    @Column(name = "Total", length = 20, precision = 2)
     private BigDecimal total;
 
     public Integer getId() {
