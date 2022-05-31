@@ -16,7 +16,7 @@ public class Customer {
     private String name;
 
     @OneToMany(mappedBy = "customer")
-    private Set<Orders> orders;
+    private Set<Order> order;
 
     public Customer() {};
 
@@ -24,12 +24,12 @@ public class Customer {
         this.name = name;
     }
 
-    public Set<Orders> getOrders() {
-        return orders;
+    public Set<Order> getOrders() {
+        return order;
     }
 
-    public void setOrders(Set<Orders> orders) {
-        this.orders = orders;
+    public void setOrders(Set<Order> order) {
+        this.order = order;
     }
 
     public Customer(String name, Integer id) {

@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "orders")
-public class Orders {
+@Table(name = "order")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +23,7 @@ public class Orders {
     @Column(name = "total", length = 20, precision = 2)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "order")
     private Set<OrdersItem> ordersItems;
 
     public Set<OrdersItem> getOrdersItems() {
