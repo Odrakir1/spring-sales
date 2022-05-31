@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customer")
 public class Customer {
 
     @Id
@@ -15,7 +15,7 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "Customer")
+    @OneToMany(mappedBy = "customer")
     private Set<Orders> orders;
 
     public Customer() {};

@@ -3,9 +3,10 @@ package com.odrakir1.domain.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 public class Orders {
 
     @Id
@@ -13,14 +14,25 @@ public class Orders {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "Customer_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(name = "OrdersDate")
+    @Column(name = "orders_date")
     private LocalDate ordersDate;
 
-    @Column(name = "Total", length = 20, precision = 2)
+    @Column(name = "total", length = 20, precision = 2)
     private BigDecimal total;
+
+    @OneToMany(mappedBy = "orders")
+    private Set<OrdersItem> ordersItems;
+
+    public Set<OrdersItem> getOrdersItems() {
+        return ordersItems;
+    }
+
+    public void setOrdersItems(Set<OrdersItem> ordersItems) {
+        this.ordersItems = ordersItems;
+    }
 
     public Integer getId() {
         return id;
