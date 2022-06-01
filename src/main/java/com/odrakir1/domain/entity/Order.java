@@ -1,12 +1,14 @@
 package com.odrakir1.domain.entity;
 
+import com.odrakir1.domain.repository.OrderItems;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "customer_order")
 public class Order {
 
     @Id
@@ -17,21 +19,21 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(name = "orders_date")
-    private LocalDate ordersDate;
+    @Column(name = "order_date")
+    private LocalDate orderDate;
 
-    @Column(name = "total", length = 20, precision = 2)
+    @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "order")
-    private Set<OrdersItem> ordersItems;
+    private Set<OrderItem> orderItems;
 
-    public Set<OrdersItem> getOrdersItems() {
-        return ordersItems;
+    public Set<OrderItem> getOrdersItems() {
+        return orderItems;
     }
 
-    public void setOrdersItems(Set<OrdersItem> ordersItems) {
-        this.ordersItems = ordersItems;
+    public void setOrdersItems(Set<OrderItem> ordersItems) {
+        this.orderItems = ordersItems;
     }
 
     public Integer getId() {
@@ -51,11 +53,11 @@ public class Order {
     }
 
     public LocalDate getOrdersDate() {
-        return ordersDate;
+        return orderDate;
     }
 
     public void setOrdersDate(LocalDate ordersDate) {
-        this.ordersDate = ordersDate;
+        this.orderDate = ordersDate;
     }
 
     public BigDecimal getTotal() {
@@ -64,5 +66,14 @@ public class Order {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", ordersDate=" + orderDate +
+                ", total=" + total +
+                '}';
     }
 }
