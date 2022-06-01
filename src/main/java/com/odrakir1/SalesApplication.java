@@ -1,54 +1,39 @@
 package com.odrakir1;
 
 import com.odrakir1.domain.entity.Customer;
+import com.odrakir1.domain.entity.Order;
 import com.odrakir1.domain.repository.Customers;
+import com.odrakir1.domain.repository.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
 public class SalesApplication {
 
     @Bean
-    public CommandLineRunner init(@Autowired Customers customers){
+    public CommandLineRunner init(@Autowired Customers customers, @Autowired Orders orders){
       return args -> {
           Customer newCustomer = new Customer();
           newCustomer.setName("Linus");
           customers.save(newCustomer);
 
-          Customer anotherCustomer = new Customer();
-          anotherCustomer.setName("John");
-          customers.save(anotherCustomer);
+          Order order = new Order();
+          order.setCustomer(newCustomer);
+          order.setOrdersDate(LocalDate.now());
+          order.setTotal(BigDecimal.valueOf(1234.99));
 
-          List<Customer> customerList = customers.findAll();
+          orders.save(order);
 
-          customerList.forEach(System.out::println);
-
-          customerList.forEach(customer -> {
-              customer.setName(customer.getName() + " updated");
-              customers.save(customer);
-          });
-
-          customerList = customers.findAll();
-
-          customerList.forEach(System.out::println);
-
-          System.out.println(customers.findByNameContains("Linus"));
-
-          customerList = customers.findAll();
-
-          customerList.forEach(customer -> {customers.delete(customer);});
-
-          customerList = customers.findAll();
-
-          if(customerList.isEmpty())
-              System.out.println("No customer found");
-          else
-            customerList.forEach(System.out::println);
+          Customer customer = customers.findCustomerFetchOrders(newCustomer.getId());
+          System.out.println(customer);
+          System.out.println(customer.getOrders());
       };
 
     }
