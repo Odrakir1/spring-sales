@@ -1,7 +1,7 @@
 package com.odrakir1.domain.repository;
 
-import com.odrakir1.domain.entity.OrdersItem;
+import com.odrakir1.domain.entity.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrdersItems extends JpaRepository<OrdersItem, Integer> {
+public interface OrderItems extends JpaRepository<OrderItem, Integer> {
 }
