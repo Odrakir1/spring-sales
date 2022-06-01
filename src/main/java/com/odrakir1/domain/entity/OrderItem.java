@@ -3,15 +3,15 @@ package com.odrakir1.domain.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "orders_item")
-public class OrdersItem {
+@Table(name = "order_item")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "orders_id")
+    @JoinColumn(name = "customer_order_id")
     private Order order;
 
     @ManyToOne
@@ -29,11 +29,11 @@ public class OrdersItem {
         this.id = id;
     }
 
-    public Order getOrders() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrders(Order order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
