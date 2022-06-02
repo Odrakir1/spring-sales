@@ -34,6 +34,8 @@ public class SalesApplication {
           Customer customer = customers.findCustomerFetchOrders(newCustomer.getId());
           System.out.println(customer);
           System.out.println(customer.getOrders());
+
+          orders.findByCustomer(newCustomer).forEach(System.out::println);
       };
 
     }
